@@ -54,17 +54,14 @@ class Stack:
 
 class ArrayListWithUndo(ArrayList):
     def __init__(self):
-        # already implemented
         super().__init__()
         self.undos = Stack()
         
     def set(self, i, v):
-        # already implemented
         self.undos.push(("set",i,self.inArray[i]))
         self.inArray[i] = v
 
     def append(self, v):
-        # TODO
         self.undos.push(("rem",self.count,None))
         self.inArray[self.count] = v
         self.count += 1
@@ -72,7 +69,6 @@ class ArrayListWithUndo(ArrayList):
             self._resizeUp() # resize array if reached capacity
         
     def insert(self, i, v):
-        # TODO
         self.undos.push(("rem",i,None))
         for j in range(self.count,i,-1):
             self.inArray[j] = self.inArray[j-1]
@@ -82,7 +78,6 @@ class ArrayListWithUndo(ArrayList):
             self._resizeUp() # resize array if reached capacity
     
     def remove(self, i):
-        # TODO
         self.undos.push(("ins",i,self.inArray[i]))
         self.count -= 1
         val = self.inArray[i]
@@ -91,7 +86,6 @@ class ArrayListWithUndo(ArrayList):
         return val
     
     def undo(self):
-        # TODO
         if self.undos.size() != 0:
             v = self.undos.pop()
             if v[0] == "set":
@@ -109,5 +103,4 @@ class ArrayListWithUndo(ArrayList):
                     self._resizeUp() # resize array if reached capacity
             
     def __str__(self):
-        # already implemented
         return str(self.toArray())+"\n-> "+str(self.undos)
