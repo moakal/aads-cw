@@ -99,8 +99,6 @@ class ArrayListWithUndo(ArrayList):
                     self.inArray[j] = self.inArray[j-1]
                 self.inArray[i] = v[2]
                 self.count += 1
-                if len(self.inArray) == self.count:
-                    self._resizeUp() # resize array if reached capacity
             
     def __str__(self):
         return str(self.toArray())+"\n-> "+str(self.undos)
