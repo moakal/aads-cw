@@ -114,7 +114,7 @@ class ArrayListWithUndo(ArrayList):
         if self.undos.size != 0:
             v = self.undos.pop()
             if v[0] == "set":
-                self.inArray[i] = v[2]
+                self.inArray[v[1]] = v[2]
             elif v[0] == "rem":
                 self.count -= 1
                 for j in range(v[1],self.count):
