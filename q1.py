@@ -1,56 +1,81 @@
+# ArrayList and Stack code to use
+
+class Stack():
+    def __init__(self):
+        self.inList = None
+        self.size = 0
+        
+    def push(self, v):
+        self.size += 1
+        self.inList = (v,self.inList)
+        
+    def pop(self):
+        if self.size == 0: assert(0)
+        self.size -= 1
+        (v,ls) = self.inList
+        self.inList = ls
+        return v
+    
+    def __str__(self):
+        s = "["
+        ls = self.inList
+        for _ in range(self.size):
+            (v,ls) = ls
+            s += str(v)
+            if ls!=None: s += ", "
+        return s+"]"
+        
 class ArrayList:
     def __init__(self):
-        self.inArray = [0 for i in range(10)] # capacity set to 10 for start
-        self.count = 0  
+        self.inArray = [0 for i in range(10)]
+        self.count = 0
+        
     def get(self, i):
         return self.inArray[i]
+
     def set(self, i, e):
         self.inArray[i] = e
+
     def length(self):
         return self.count
+
     def append(self, e):
         self.inArray[self.count] = e
         self.count += 1
         if len(self.inArray) == self.count:
-            self._resizeUp() # resize array if reached capacity
+            self._resizeUp()
+
     def insert(self, i, e):
         for j in range(self.count,i,-1):
             self.inArray[j] = self.inArray[j-1]
         self.inArray[i] = e
         self.count += 1
         if len(self.inArray) == self.count:
-            self._resizeUp() # resize array if reached capacity
+            self._resizeUp()
+    
     def remove(self, i):
         self.count -= 1
         val = self.inArray[i]
         for j in range(i,self.count):
             self.inArray[j] = self.inArray[j+1]
         return val
+
     def _resizeUp(self):
         newArray = [0 for i in range(2*len(self.inArray))]
         for j in range(len(self.inArray)):
             newArray[j] = self.inArray[j]
         self.inArray = newArray
-    def appendAll(self, A):
-        for i in range(len(A)):
-            self.append(A[i])
-    def toArray(self):
-        newArray = [0 for i in range(self.count)]
-        for i in range(self.count):
-            newArray[i] = self.inArray[i]
-        return newArray
         
-class Stack:
-    def __init__(self):
-        self.inList = ArrayList()
+    def toArray(self):
+        return self.inArray[:self.count]
+
     def __str__(self):
-        return(str(self.inList.toArray()))
-    def size(self):
-        return self.inList.length()
-    def push(self, e):
-        self.inList.insert(0,e)
-    def pop(self):
-        return self.inList.remove(0)
+        if self.count == 0: return "[]"
+        s = "["
+        for i in range(self.count-1): s += str(self.inArray[i])+", "
+        return s+str(self.inArray[self.count-1])+"]" 
+
+## QUESTION 1 IMPLEMENTATION
 
 class ArrayListWithUndo(ArrayList):
     def __init__(self):
@@ -86,7 +111,7 @@ class ArrayListWithUndo(ArrayList):
         return val
     
     def undo(self):
-        if self.undos.size() != 0:
+        if self.undos.size != 0:
             v = self.undos.pop()
             if v[0] == "set":
                 self.inArray[i] = v[2]
